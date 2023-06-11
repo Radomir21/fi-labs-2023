@@ -4,6 +4,7 @@ from typing import Dict
 from collections import defaultdict
 
 
+CHARSET_RU = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя '
 class FileReader:
     def __init__(self, filename: str, encoding: str = "utf-8"):
         self.filename = filename
@@ -25,8 +26,18 @@ class Preprocessor:
             return " "
 
     @classmethod
-    def format(cls, text: str) -> str:
-        formatted = "".join([cls.preprocess(char) for char in text])
+    #def format(cls, text: str, no_space: bool=False) -> str:
+        #formatted = "".join([cls.preprocess(char) for char in text])
+        #text = text.replace(' ', '') if no_space else text
+        #text = ' '.join(text.split())
+        #cleaned_text = " ".join(formatted.split())
+        #return cleaned_text
+
+   
+    def format(cls, text: str, no_space: bool=False) -> str:
+        formatted = "".join([cls.preprocess(char) for char in text if char != ' '])
+        text = text.replace(' ', '') if no_space else text
+        text = ' '.join(text.split())
         cleaned_text = " ".join(formatted.split())
         return cleaned_text
 
@@ -55,9 +66,19 @@ class TextAnalyzer:
         self.ngram_counter = ngram_counter
         self.text = self.file_reader.read()
 
+    #def analyze(self):
+        #formatted_text = self.preprocessor.format(self.text)
+        #char_frequencies = self.ngram_counter.count(formatted_text)
+        #bigram_frequencies = self.ngram_counter.count(formatted_text, ngram=2)
+        #bigram_frequencies_no_intersect = self.ngram_counter.count(
+        #formatted_text, ngram=2, intersection=False
+        #)
+        #return char_frequencies, bigram_frequencies, bigram_frequencies_no_intersect
+
+
     def analyze(self):
-        formatted_text = self.preprocessor.format(self.text)
-        char_frequencies = self.ngram_counter.count(formatted_text)
+        formatted_text = self.preprocessor.format(self.text, no_space=True)
+        char_frequencies = self.ngram_counter.count(formatted_text, intersection=False)
         bigram_frequencies = self.ngram_counter.count(formatted_text, ngram=2)
         bigram_frequencies_no_intersect = self.ngram_counter.count(
             formatted_text, ngram=2, intersection=False
@@ -95,6 +116,20 @@ class TextAnalyzer:
             bigram_freq_matrix[left_char] = row
 
         pprint.pprint(bigram_freq_matrix)
+
+    #def print_entropy(
+        #self, char_frequencies, bigram_frequencies, bigram_frequencies_no_intersect
+    #):
+        #H1 = self.sum_entropy(char_frequencies)
+        #H2=self.sum_entropy(char_frequencies)
+        #H2_intersect = self.sum_entropy(bigram_frequencies) / 2
+        #H2_no_intersect = self.sum_entropy(bigram_frequencies_no_intersect) / 2
+        #entropy_values = {
+            #"H1": H1, 
+            #"H2_with_intersection": H2_intersect,
+            #"H2_without_intersection": H2_no_intersect, 
+        #}
+        #pprint.pprint(entropy_values)
 
     def print_entropy(
         self, char_frequencies, bigram_frequencies, bigram_frequencies_no_intersect
