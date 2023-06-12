@@ -26,16 +26,10 @@ class Preprocessor:
             return " "
 
     @classmethod
-    #def format(cls, text: str, no_space: bool=False) -> str:
-        #formatted = "".join([cls.preprocess(char) for char in text])
-        #text = text.replace(' ', '') if no_space else text
-        #text = ' '.join(text.split())
-        #cleaned_text = " ".join(formatted.split())
-        #return cleaned_text
-
-   
+    
     def format(cls, text: str, no_space: bool=False) -> str:
-        formatted = "".join([cls.preprocess(char) for char in text if char != ' '])
+        #formatted = "".join([cls.preprocess(char) for char in text if char != ' ' ])
+        formatted = "".join([cls.preprocess(char) for char in text])
         text = text.replace(' ', '') if no_space else text
         text = ' '.join(text.split())
         cleaned_text = " ".join(formatted.split())

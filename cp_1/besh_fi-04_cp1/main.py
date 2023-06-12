@@ -7,24 +7,15 @@ if __name__ == "__main__":
     preprocessor = Preprocessor()
     ngram_counter = NGramCounter()
     analyzer = TextAnalyzer(file_reader, preprocessor, ngram_counter)
-    # Process text
-   # (
-    #    char_frequencies,
-    #    bigram_frequencies,
-    #    bigram_frequencies_no_intersect,
-    #) = analyzer.analyze()
-    # Show results
-    #analyzer.print_frequencies(char_frequencies)
-    #analyzer.print_bigram_frequencies(char_frequencies, bigram_frequencies)
-    #analyzer.print_entropy(char_frequencies, bigram_frequencies, bigram_frequencies_no_intersect)
-    #------------------------------------------------------------------------------------------------#
-    #Proccec text
+     #Process text
     (
-    char_frequencies,
-    bigram_frequencies,
-    bigram_frequencies_no_intersect,
-) = analyzer.analyze()
-# Show results
-analyzer.print_frequencies(char_frequencies)
-analyzer.print_bigram_frequencies(char_frequencies, bigram_frequencies)
-analyzer.print_entropy(char_frequencies, bigram_frequencies, bigram_frequencies_no_intersect)
+        char_frequencies,
+        bigram_frequencies,
+        bigram_frequencies_no_intersect,
+    ) = analyzer.analyze()
+     #Show results
+    analyzer.print_frequencies(char_frequencies)
+    analyzer.print_bigram_frequencies(char_frequencies, bigram_frequencies)
+    analyzer.print_entropy(char_frequencies, bigram_frequencies, bigram_frequencies_no_intersect)
+    #------------------------------------------------------------------------------------------------#
+    
